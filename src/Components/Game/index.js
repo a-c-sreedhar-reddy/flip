@@ -1,4 +1,4 @@
-import React, {useEffect} from './node_modules/react';
+import React, {useEffect} from 'react';
 import {View, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../Header';
