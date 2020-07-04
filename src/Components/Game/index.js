@@ -4,13 +4,16 @@ import Header from '../Header';
 import Details from '../Details';
 import Layout from '../Layout';
 import Card from '../Card';
+import {replay, tick} from '../../Redux/Game/GameActions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-function Game({state, dispatch}) {
+function Game({state, dispatch, ...props}) {
   const {level, score, time, cards, rows, columns} = state;
   const timesUp = time === 0;
   useEffect(() => {
     if (!timesUp) {
-      const interval = setInterval(() => dispatch({type: 'tick'}), 1000);
+      const interval = setInterval(() => props.tick(), 1000);
       return () => clearInterval(interval);
     }
   }, [timesUp, level, dispatch]);
@@ -19,10 +22,7 @@ function Game({state, dispatch}) {
   const canToggle = firstCard === -1 || secondCard === -1;
   useEffect(() => {
     if (firstCard !== -1 && secondCard !== -1) {
-      setTimeout(
-        () => dispatch({type: 'FlipTwoCards', data: [firstCard, secondCard]}),
-        500,
-      );
+      setTimeout(() => dispatch({type: 'FlipTwoCards'}), 500);
     }
   }, [dispatch, firstCard, secondCard]);
   useEffect(() => {
@@ -57,7 +57,8 @@ function Game({state, dispatch}) {
               color="grey"
               onPress={() => {
                 // console.log('replay');
-                dispatch({type: 'Replay'});
+                props.replay();
+                // dispatch({type: 'Replay'});
               }}
             />
           )}
@@ -80,4 +81,14 @@ function Game({state, dispatch}) {
     </View>
   );
 }
-export default Game;
+// const mapStateToProps = function (state) {
+//   return {
+//     state: state.game,
+//   };
+// };
+const mapDispatchToProps = (dispatch) => ({
+  tick: bindActionCreators(tick, dispatch),
+  replay: bindActionCreators(replay, dispatch),
+  dispatch,
+});
+export default connect(null, mapDispatchToProps)(Game);

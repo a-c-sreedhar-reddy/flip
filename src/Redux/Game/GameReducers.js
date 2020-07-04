@@ -8,7 +8,6 @@ function generateCards(n) {
   return cards;
 }
 const INITIAL_STATE = {
-  loading: true,
   level: 1,
   score: 0,
   time: 60,
@@ -24,7 +23,6 @@ export function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'Replay':
       return {
-        loading: false,
         level: 1,
         score: 0,
         time: 60,

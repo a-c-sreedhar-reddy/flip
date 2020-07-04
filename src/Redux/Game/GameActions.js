@@ -4,15 +4,7 @@ export const replay = (payload) => ({
   type: GameConstants.Replay,
   payload,
 });
-export const UpdateStateFromStorage = (payload) => ({
-  type: GameConstants.UpdateStateFromStorage,
-  payload,
-});
-export const NoDataInStorage = (payload) => ({
-  type: GameConstants.NoDataInStorage,
-  payload,
-});
-export const GoToNextLevel = (payload) => ({
+export const goToNextLevel = (payload) => ({
   type: GameConstants.GoToNextLevel,
   payload,
 });
@@ -20,11 +12,11 @@ export const tick = (payload) => ({
   type: GameConstants.tick,
   payload,
 });
-export const opencard = (payload) => ({
+export const openCard = (payload) => ({
   type: GameConstants.opencard,
   payload,
 });
-export const FlipTwoCards = (payload) => ({
+export const flipTwoCards = (payload) => ({
   type: GameConstants.FlipTwoCards,
   payload,
 });
