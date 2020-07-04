@@ -34,13 +34,6 @@ export function reducer(state = INITIAL_STATE, action) {
         rows: 2,
         columns: 2,
       };
-    case 'UpdateStateFromStorage':
-      if (action.data) {
-        return {...action.data, loading: false};
-      }
-      return {...state, loading: false};
-    case 'NoDataInStorage':
-      return {...state, loading: false};
     case 'GoToNextLevel': {
       const nextLevel = state.level + 1;
       const boxes = 2 + 2 * nextLevel;

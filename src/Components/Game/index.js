@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {View, Button} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../Header';
 import Details from '../Details';
 import Layout from '../Layout';
@@ -30,10 +29,6 @@ function Game({state, dispatch}) {
     const hasGameCompleted = cards.every((card) => card.status === 'found');
     hasGameCompleted && dispatch({type: 'GoToNextLevel'});
   }, [cards, dispatch]);
-  useEffect(() => {
-    const state = {level, score, time, cards, rows, columns};
-    AsyncStorage.setItem('@gameState', JSON.stringify(state));
-  }, [cards, columns, level, rows, score, time]);
   const mins = parseInt(time / 60, 10);
   const secs = parseInt(time % 60, 10);
   return (
