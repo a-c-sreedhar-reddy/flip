@@ -1,18 +1,18 @@
 import * as GameConstants from './GameConstants';
 
 export const replay = () => ({
-  type: GameConstants.Replay,
+  type: GameConstants.REPLAY,
 });
 export const goToNextLevel = () => ({
-  type: GameConstants.GoToNextLevel,
+  type: GameConstants.GO_TO_NEXT_LEVEL,
 });
 export const tick = () => ({
-  type: GameConstants.tick,
+  type: GameConstants.TICK,
 });
 export const openCard = (data) => ({
-  type: GameConstants.opencard,
+  type: GameConstants.OPEN_CARD,
   data,
 });
 export const flipTwoCards = () => ({
-  type: GameConstants.FlipTwoCards,
+  type: GameConstants.FLIP_TWO_CARDS,
 });

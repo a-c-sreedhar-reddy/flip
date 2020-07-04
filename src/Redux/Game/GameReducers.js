@@ -21,7 +21,7 @@ const INITIAL_STATE = {
 export function reducer(state = INITIAL_STATE, action) {
   // console.log(action);
   switch (action.type) {
-    case 'Replay':
+    case 'REPLAY':
       return {
         level: 1,
         score: 0,
@@ -32,7 +32,7 @@ export function reducer(state = INITIAL_STATE, action) {
         rows: 2,
         columns: 2,
       };
-    case 'GoToNextLevel': {
+    case 'GO_TO_NEXT_LEVEL': {
       const nextLevel = state.level + 1;
       const boxes = 2 + 2 * nextLevel;
       const [newRows, newColumns] =
@@ -53,13 +53,13 @@ export function reducer(state = INITIAL_STATE, action) {
         columns: newColumns,
       };
     }
-    case 'tick': {
+    case 'TICK': {
       if (state.time === 0) {
         return state;
       }
       return {...state, time: state.time - 1};
     }
-    case 'opencard':
+    case 'OPEN_CARD':
       if (state.time === 0) {
         return state;
       }
@@ -96,7 +96,7 @@ export function reducer(state = INITIAL_STATE, action) {
           ),
         };
       }
-    case 'FlipTwoCards':
+    case 'FLIP_TWO_CARDS':
       return {
         ...state,
         cards: state.cards.map((card) =>
