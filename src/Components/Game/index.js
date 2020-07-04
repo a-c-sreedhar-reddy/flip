@@ -4,7 +4,13 @@ import Header from '../Header';
 import Details from '../Details';
 import Layout from '../Layout';
 import Card from '../Card';
-import {replay, tick} from '../../Redux/Game/GameActions';
+import {
+  replay,
+  tick,
+  flipTwoCards,
+  goToNextLevel,
+  openCard,
+} from '../../Redux/Game/GameActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -16,19 +22,19 @@ function Game({state, dispatch, ...props}) {
       const interval = setInterval(() => props.tick(), 1000);
       return () => clearInterval(interval);
     }
-  }, [timesUp, level, dispatch]);
+  }, [timesUp, level]);
   const firstCard = cards.findIndex((card) => card.status === 'firstTry');
   const secondCard = cards.findIndex((card) => card.status === 'secondTry');
   const canToggle = firstCard === -1 || secondCard === -1;
   useEffect(() => {
     if (firstCard !== -1 && secondCard !== -1) {
-      setTimeout(() => dispatch({type: 'FlipTwoCards'}), 500);
+      setTimeout(() => props.flipTwoCards(), 500);
     }
-  }, [dispatch, firstCard, secondCard]);
+  }, [firstCard, secondCard]);
   useEffect(() => {
     const hasGameCompleted = cards.every((card) => card.status === 'found');
-    hasGameCompleted && dispatch({type: 'GoToNextLevel'});
-  }, [cards, dispatch]);
+    hasGameCompleted && props.goToNextLevel();
+  }, [cards]);
   const mins = parseInt(time / 60, 10);
   const secs = parseInt(time % 60, 10);
   return (
@@ -71,9 +77,7 @@ function Game({state, dispatch, ...props}) {
               disabled={timesUp}
               key={i}
               card={card}
-              onPress={() =>
-                !timesUp && canToggle && dispatch({type: 'opencard', data: i})
-              }
+              onPress={() => !timesUp && canToggle && props.openCard(i)}
             />
           ))}
         </Layout>
@@ -81,14 +85,17 @@ function Game({state, dispatch, ...props}) {
     </View>
   );
 }
-// const mapStateToProps = function (state) {
-//   return {
-//     state: state.game,
-//   };
-// };
+const mapStateToProps = function (state) {
+  return {
+    state: state.game,
+  };
+};
 const mapDispatchToProps = (dispatch) => ({
   tick: bindActionCreators(tick, dispatch),
   replay: bindActionCreators(replay, dispatch),
+  flipTwoCards: bindActionCreators(flipTwoCards, dispatch),
+  goToNextLevel: bindActionCreators(goToNextLevel, dispatch),
+  openCard: bindActionCreators(openCard, dispatch),
   dispatch,
 });
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
